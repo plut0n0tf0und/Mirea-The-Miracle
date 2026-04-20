@@ -104,7 +104,19 @@ function initUser() {
     } else {
         if (!sessionStorage.getItem('trip_anon_ping')) {
             sessionStorage.setItem('trip_anon_ping', 'true');
-            notifyTelegram(`👻 <b>Anonymous Lurker Alert!</b>\nSomeone just opened the trip link but hasn't entered their name yet...`);
+            
+            // Device Tracking
+            const ua = navigator.userAgent;
+            const isMobile = /Mobi|Android/i.test(ua) ? 'Mobile 📱' : 'Desktop 💻';
+            let os = 'Unknown OS';
+            if (/Windows/i.test(ua)) os = 'Windows';
+            if (/Mac/i.test(ua)) os = 'Apple Device (Mac/iOS)';
+            if (/Android/i.test(ua)) os = 'Android';
+            if (/Linux/i.test(ua) && !/Android/i.test(ua)) os = 'Linux';
+            
+            const info = `${isMobile} | ${os}\n📏 Screen: ${window.screen.width}x${window.screen.height}\n🌍 Lang: ${navigator.language}`;
+            
+            notifyTelegram(`👻 <b>Anonymous Lurker Alert!</b>\nSomeone just opened the trip link but hasn't entered their name yet...\n\n<i>Device:</i>\n<code>${info}</code>`);
         }
         showUserModal();
     }
