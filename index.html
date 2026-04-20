@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Where we going 👀</title>
+    <title>Mirea The Miracle</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b5cf6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 2l3 7 7 3-7 3-3 7-3-7-7-3 7-3z'/></svg>">
     <meta name="description" content="Plan a group trip interactively. Vote on activities and plan the evening!">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -22,35 +23,46 @@
         </header>
 
         <!-- ACTIVITY CARDS SECTION -->
+        <h2 class="section-title">Top Ideas</h2>
         <section class="activities" id="activities" aria-label="Trip activities to vote on">
             <!-- Cards are dynamically injected via JS -->
         </section>
+        
+        <!-- SUGGEST CTA -->
+        <div class="suggest-cta-wrapper" style="margin-top: 24px; margin-bottom: 40px;">
+            <button id="open-suggest-btn" class="glass-suggest-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <span>Suggest a different place</span>
+            </button>
+        </div>
 
-        <!-- ADD YOUR IDEA SECTION -->
-        <section class="add-idea-wrapper">
-            <div class="add-idea-card glass">
-                <input type="text" id="idea-input" class="idea-input" placeholder="suggest something..."
-                    aria-label="Suggest a new activity">
-                <button class="submit-idea-btn" id="submit-idea" aria-label="Submit your idea">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
+        <!-- COMMENTS SECTION -->
+        <section class="comments-section" id="comments-section">
+            <h2>Discussion <span class="emoji">💬</span></h2>
+            <div class="comments-list" id="comments-list">
+                <!-- Comments injected here -->
+            </div>
+            <div class="comment-input-wrapper glass">
+                <input type="text" id="comment-input" class="comment-input" placeholder="Say something..." aria-label="Write a comment" autocomplete="off">
+                <button class="submit-comment-btn" id="submit-comment" aria-label="Send comment">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
                 </button>
             </div>
-            <p id="idea-status" class="idea-status"></p>
+            <p id="comment-status" class="idea-status"></p>
         </section>
+
+
 
         <div class="divider"></div>
 
         <!-- FINAL PLAN SECTION -->
         <section class="final-plan">
-            <h2>The Evening Plan</h2>
+            <h2>The Game Plan</h2>
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-dot line-active"></div>
                     <div class="timeline-content">
-                        <span class="time">6:00 PM</span>
+                        <span class="time">11:00 AM</span>
                         <h3>Meetup & Selected Activity</h3>
                         <p>Let the games begin</p>
                     </div>
@@ -58,17 +70,25 @@
                 <div class="timeline-item">
                     <div class="timeline-dot line-active"></div>
                     <div class="timeline-content">
-                        <span class="time">8:30 PM</span>
-                        <h3>Dinner & Drinks</h3>
-                        <p>Fuel up and refuel</p>
+                        <span class="time">2:00 PM - 3:00 PM</span>
+                        <h3>Lunch</h3>
+                        <p>Let's find some good food</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot line-active"></div>
+                    <div class="timeline-content">
+                        <span class="time">Afternoon</span>
+                        <h3>Beach vibe</h3>
+                        <p>Sun, sand, and chilling 🌊</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <span class="time">10:30 PM</span>
-                        <h3>Beach vibe</h3>
-                        <p class="highlight-text">Chill ending to the night 🌊</p>
+                        <span class="time">5:00 PM</span>
+                        <h3>Board the Bus</h3>
+                        <p class="highlight-text">Heading back home 🚌</p>
                     </div>
                 </div>
             </div>
@@ -77,9 +97,25 @@
 
     <!-- STICKY CTA -->
     <div class="sticky-cta-container">
-        <button class="sticky-cta" onclick="document.getElementById('activities').scrollIntoView({behavior: 'smooth'})">
-            Vote now &darr;
+        <button id="sticky-vote-cta" class="sticky-cta" onclick="document.getElementById('activities').scrollIntoView({behavior: 'smooth'})" aria-label="Scroll to voting options">
+            Click here to vote &darr;
         </button>
+    </div>
+
+    <!-- USER ONBOARDING MODAL -->
+    <div class="overlay" id="user-overlay" aria-hidden="false"></div>
+    <div class="user-modal glass" id="user-modal" aria-hidden="false" role="dialog" aria-labelledby="user-modal-title">
+        <h2 id="user-modal-title">Who's joining?</h2>
+        <p class="subtext">Enter your name to vote & chat</p>
+        <div class="avatar-preview">
+            <img id="avatar-img" src="https://api.dicebear.com/7.x/bottts/svg?seed=Guest&backgroundColor=transparent" alt="Avatar preview">
+        </div>
+        <input type="text" id="username-input" class="user-input" placeholder="Your name" autocomplete="off" maxlength="20">
+        <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.3; margin-top: -12px; margin-bottom: 24px;">Use your real name… or at least something you won’t regret when it shows up publicly 🙂</p>
+        <button id="join-btn" class="primary-btn">Join Party <span aria-hidden="true">&rarr;</span></button>
+        <div style="margin-top: 24px; font-size: 0.8rem; color: var(--text-muted); font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 6px;">
+            <span>Planned by <b>Sudhakar</b></span> ✌️
+        </div>
     </div>
 
     <!-- BOTTOM SHEET MODAL -->
@@ -97,7 +133,24 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- SUGGEST MODAL -->
+    <div class="overlay" id="suggest-overlay" aria-hidden="true"></div>
+    <div class="user-modal glass" id="suggest-modal" aria-hidden="true" role="dialog" style="text-align: left;">
+        <button id="close-suggest-modal" aria-label="Close modal" style="position:absolute; right:16px; top:16px; color:var(--text); background:none; border:none; font-size:1.5rem; cursor:pointer; z-index:10;">×</button>
+        <h2 style="margin-top: 0; font-size: 1.5rem; margin-bottom: 4px;">Suggest an Activity</h2>
+        <p class="subtext" style="margin-bottom: 20px;">Got a better idea? Toss it in the ring.</p>
+        
+        <input type="text" id="suggest-title" class="user-input" placeholder="Title (e.g., Ice Skating)" style="margin-bottom: 12px; font-size:0.9rem;" maxlength="40">
+        <input type="text" id="suggest-vibe" class="user-input" placeholder="The vibe / what to do" style="margin-bottom: 12px; font-size:0.9rem;" maxlength="100">
+        <input type="text" id="suggest-price" class="user-input" placeholder="Est. Price (e.g., ₹200)" style="margin-bottom: 12px; font-size:0.9rem;" maxlength="30">
+        <input type="url" id="suggest-media" class="user-input" placeholder="Image URL (Optional)" style="margin-bottom: 8px; font-size:0.9rem;">
+        
+        <p id="suggest-status" style="color: var(--danger); font-size: 0.85rem; height: 20px; margin-bottom: 8px;"></p>
+        
+        <button id="submit-suggest-btn" class="primary-btn" style="width: 100%;">Submit Idea</button>
+    </div>
+
+    <script type="module" src="script.js"></script>
 </body>
 
 </html>
