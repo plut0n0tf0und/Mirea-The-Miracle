@@ -114,7 +114,14 @@ function initUser() {
             if (/Android/i.test(ua)) os = 'Android';
             if (/Linux/i.test(ua) && !/Android/i.test(ua)) os = 'Linux';
             
-            const info = `${isMobile} | ${os}\n📏 Screen: ${window.screen.width}x${window.screen.height}\n🌍 Lang: ${navigator.language}`;
+            let browser = 'Unknown Browser';
+            if (/Firefox/i.test(ua)) browser = 'Firefox';
+            else if (/OPR|Opera/i.test(ua)) browser = 'Opera';
+            else if (/Edg/i.test(ua)) browser = 'Edge';
+            else if (/Chrome/i.test(ua)) browser = 'Chrome';
+            else if (/Safari/i.test(ua)) browser = 'Safari';
+            
+            const info = `${isMobile} | ${os}\n🌐 Browser: ${browser}\n📏 Screen: ${window.screen.width}x${window.screen.height}\n🌍 Lang: ${navigator.language}`;
             
             notifyTelegram(`👻 <b>Anonymous Lurker Alert!</b>\nSomeone just opened the trip link but hasn't entered their name yet...\n\n<i>Device:</i>\n<code>${info}</code>`);
         }
