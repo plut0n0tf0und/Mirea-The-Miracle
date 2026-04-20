@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Where we going 👀</title>
+    <meta name="description" content="Plan a group trip interactively. Vote on activities and plan the evening!">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+
+    <main class="container">
+        <!-- HERO SECTION -->
+        <header class="hero">
+            <h1>Where we going <span class="emoji">👀</span></h1>
+            <p class="subtext">Tap, explore, vote</p>
+        </header>
+
+        <!-- ACTIVITY CARDS SECTION -->
+        <section class="activities" id="activities" aria-label="Trip activities to vote on">
+            <!-- Cards are dynamically injected via JS -->
+        </section>
+
+        <!-- ADD YOUR IDEA SECTION -->
+        <section class="add-idea-wrapper">
+            <div class="add-idea-card glass">
+                <input type="text" id="idea-input" class="idea-input" placeholder="suggest something..."
+                    aria-label="Suggest a new activity">
+                <button class="submit-idea-btn" id="submit-idea" aria-label="Submit your idea">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+            <p id="idea-status" class="idea-status"></p>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- FINAL PLAN SECTION -->
+        <section class="final-plan">
+            <h2>The Evening Plan</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot line-active"></div>
+                    <div class="timeline-content">
+                        <span class="time">6:00 PM</span>
+                        <h3>Meetup & Selected Activity</h3>
+                        <p>Let the games begin</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot line-active"></div>
+                    <div class="timeline-content">
+                        <span class="time">8:30 PM</span>
+                        <h3>Dinner & Drinks</h3>
+                        <p>Fuel up and refuel</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="time">10:30 PM</span>
+                        <h3>Beach vibe</h3>
+                        <p class="highlight-text">Chill ending to the night 🌊</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- STICKY CTA -->
+    <div class="sticky-cta-container">
+        <button class="sticky-cta" onclick="document.getElementById('activities').scrollIntoView({behavior: 'smooth'})">
+            Vote now &darr;
+        </button>
+    </div>
+
+    <!-- BOTTOM SHEET MODAL -->
+    <div class="overlay" id="modal-overlay" aria-hidden="true"></div>
+    <div class="bottom-sheet" id="activity-modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title">
+        <div class="sheet-handle"></div>
+        <button class="close-btn" id="close-modal" aria-label="Close modal">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+        </button>
+        <div class="sheet-content" id="modal-content">
+            <!-- Modal details injected dynamically via JS -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
