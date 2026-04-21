@@ -144,7 +144,7 @@ function showUserModal() {
         img.src = `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(val)}&backgroundColor=transparent`;
     });
 
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async () => {
         let name = input.value.trim() || 'Guest';
         const colors = ['#f43f5e', '#8b5cf6', '#3b82f6', '#10b981', '#f59e0b', '#06b6d4'];
         const color = colors[Math.floor(Math.random() * colors.length)];
@@ -156,6 +156,20 @@ function showUserModal() {
             color
         };
         localStorage.setItem('trip_user', JSON.stringify(state.user));
+        
+        // Save to Supabase 'users' table silently
+        try {
+            await supabase.from('users').insert([{
+                id: state.user.id,
+                name: state.user.name,
+                avatar: state.user.avatar,
+                color: state.user.color,
+                device_info: navigator.userAgent,
+                joined_at: new Date().toISOString()
+            }]);
+        } catch(e) {
+            console.error("Failed to save user to db:", e);
+        }
         
         modal.classList.remove('active');
         overlay.classList.remove('active');
